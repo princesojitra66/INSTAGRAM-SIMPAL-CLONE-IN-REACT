@@ -1,0 +1,137 @@
+.home{
+  min-height:100vh;
+  background:#0f0f0f;
+  font-family:Arial, Helvetica, sans-serif;
+  color:white;
+}
+
+/* Navbar */
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 25px;
+  background:#111;
+  border-bottom:1px solid #222;
+}
+
+.navbar h3{
+  color:white;
+}
+
+/* Logout button */
+
+.logout-btn{
+  border:1px solid #444;
+  background:#1a1a1a;
+  color:white;
+  padding:6px 14px;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+.logout-btn:hover{
+  background:red;
+}
+
+/* Container */
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Post card */
+
+.post-card{
+  background:#1a1a1a;
+  border:1px solid #222;
+  margin-bottom:25px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+/* User */
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+}
+
+.user img{
+  border-radius:50%;
+}
+
+/* Image */
+
+.post-img{
+  width:100%;
+}
+
+/* Body */
+
+.post-body{
+  padding:12px;
+}
+
+/* Buttons */
+
+.actions{
+  margin-bottom:10px;
+}
+
+.actions button{
+  border:1px solid #333;
+  background:#111;
+  color:white;
+  padding:6px 12px;
+  margin-right:8px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.actions button:hover{
+  background:#333;
+}
+
+/* Comments */
+
+.comment-text{
+  font-size:14px;
+  color:#ccc;
+}
+
+/* Comment box */
+
+.comment-box{
+  display:flex;
+  margin-top:10px;
+}
+
+.comment-box input{
+  flex:1;
+  background:#111;
+  border:1px solid #333;
+  color:white;
+  padding:7px 10px;
+  border-radius:5px;
+}
+
+.comment-box button{
+  margin-left:8px;
+  border:1px solid #333;
+  background:#333;   
+  color:white;       
+  padding:7px 14px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.comment-box button:hover{
+  background:#f2f2f2;
+  color: #333;
+}
