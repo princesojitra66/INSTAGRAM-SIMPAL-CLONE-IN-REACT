@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Home.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Home({ setPage }) {
 
@@ -27,8 +27,9 @@ function Home({ setPage }) {
     }
   ]);
 
-  const [commentInput, setCommentInput] = useState("");
+  const [commentInputs, setCommentInputs] = useState({});
 
+  // Like toggle
   const toggleLike = (id) => {
     const updatedPosts = posts.map((post) =>
       post.id === id ? { ...post, liked: !post.liked } : post
@@ -36,133 +37,137 @@ function Home({ setPage }) {
     setPosts(updatedPosts);
   };
 
-  const addComment = (id) => {
+  // Handle input per post
+  const handleInputChange = (id, value) => {
+    setCommentInputs({
+      ...commentInputs,
+      [id]: value
+    });
+  };
 
-    if (commentInput.trim() === "") return;
+  // Add comment
+  const addComment = (id) => {
+    const text = commentInputs[id];
+    if (!text || text.trim() === "") return;
 
     const updatedPosts = posts.map((post) => {
-
       if (post.id === id) {
         return {
           ...post,
-          comments: [...post.comments, commentInput]
+          comments: [...post.comments, text]
         };
       }
-
       return post;
-
     });
 
     setPosts(updatedPosts);
-    setCommentInput("");
-
+    setCommentInputs({ ...commentInputs, [id]: "" });
   };
 
   return (
-
-    <div className="home">
+    <div style={{ background: "#0f0f0f", minHeight: "100vh" }}>
 
       {/* Navbar */}
-
-      <nav className="navbar">
-
-        <h3>MyCamFeed</h3>
+      <nav className="navbar navbar-dark bg-dark px-4">
+        <h3 className="text-white">MyCamFeed</h3>
 
         <button
-          className="logout-btn"
+          className="btn btn-outline-light"
           onClick={() => setPage("login")}
         >
           Logout
         </button>
-
       </nav>
 
+      {/* Feed */}
+      <div className="container py-4 d-flex flex-column align-items-center">
 
-      <div className="container">
-
-        {posts.map((post)=>(
-          <div key={post.id} className="post-card">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="card mb-4 shadow-sm"
+            style={{
+              width: "400px",
+              background: "#1a1a1a",
+              border: "1px solid #222",
+              borderRadius: "12px",
+              overflow: "hidden"
+            }}
+          >
 
             {/* User */}
-
-            <div className="user">
-
+            <div className="d-flex align-items-center p-3">
               <img
                 src={`https://i.pravatar.cc/40?img=${post.id}`}
+                className="rounded-circle me-2"
+                width="40"
+                height="40"
                 alt=""
               />
-
-              <strong>{post.user}</strong>
-
+              <strong className="text-white">{post.user}</strong>
             </div>
 
-
             {/* Image */}
-
             <img
               src={post.img}
-              className="post-img"
+              className="card-img-top"
+              style={{ height: "400px", objectFit: "cover" }}
               alt=""
             />
 
+            {/* Body */}
+            <div className="card-body text-white">
 
-            <div className="post-body">
-
-              {/* Buttons */}
-
-              <div className="actions">
+              {/* Actions */}
+              <div className="d-flex gap-2 mb-2">
 
                 <button
-                  className="like"
+                  className="btn btn-sm btn-outline-light"
                   onClick={() => toggleLike(post.id)}
                 >
                   {post.liked ? "❤️ Liked" : "🤍 Like"}
                 </button>
 
-                <button className="comment">
+                <button className="btn btn-sm btn-outline-light">
                   💬 Comment
                 </button>
 
-                <button className="share">
+                <button className="btn btn-sm btn-outline-light">
                   🔗 Share
                 </button>
 
               </div>
 
-
               {/* Caption */}
-
               <p>
                 <strong>{post.user}</strong> Amazing photo 📸
               </p>
 
-
               {/* Comments */}
-
-              {post.comments.map((c,i)=>(
-                <p key={i} className="comment-text">
+              {post.comments.map((c, i) => (
+                <p key={i} className="small text-secondary mb-1">
                   {c}
                 </p>
               ))}
 
-
-              {/* Comment Input */}
-
-              <div className="comment-box">
-
+              {/* Comment box */}
+              <div className="d-flex mt-2">
                 <input
                   type="text"
+                  className="form-control bg-dark text-white border-secondary"
                   placeholder="Write comment..."
-                  value={commentInput}
-                  onChange={(e)=>setCommentInput(e.target.value)}
+                  value={commentInputs[post.id] || ""}
+                  onChange={(e) =>
+                    handleInputChange(post.id, e.target.value)
+                  }
                 />
 
                 <button
-                  onClick={()=>addComment(post.id)}
+                  className="btn btn-primary ms-2"
+                  onClick={() => addComment(post.id)}
                 >
                   Post
                 </button>
-
               </div>
 
             </div>
@@ -171,9 +176,7 @@ function Home({ setPage }) {
         ))}
 
       </div>
-
     </div>
-
   );
 }
 
